@@ -10,33 +10,52 @@ const App = (props)=> {
     // Propreties:
     // 1. the recipes data:
   const [recipe, setRecipes] = useState([]);
+  const [serchValue, setSearchValue] = useState('');
+  const [query, setQuery] = useState('');
 
   // get the data from the API :
   const getReciepies = async ()=> {
-    const response = await fetch(`https://api.edamam.com/search?q=egg&app_id=${APP_ID}&app_key=${APP_KEY}`);
+    const response = await fetch(`https://api.edamam.com/search?q=${query}&app_id=${APP_ID}&app_key=${APP_KEY}`);
     const data = await response.json();
     console.log(data);
     
     setRecipes(data.hits);
   }
 
+  // get data input when typing :
+  const getValue = e => {
+    setSearchValue(e.target.value)
+  }
+
+  // set the puted query to the API request :
+  const getSearch = e => {
+    e.preventDefault();
+    setQuery(serchValue);
+    setSearchValue("")
+  }
+
+  // run when the page first load and the query changing :
   useEffect(()=> {
     getReciepies();
-  },[]);
+  },[query]);
 
 
   return (
     <main>
       <div className="App-header">
         <div className="header" >Search for a reciepe</div>
-        <form className="searchBar">
-          <input type="text" className="searchText"></input>
+        <form className="searchBar" onSubmit={getSearch}>
+          <input type="text" className="searchText" value={serchValue} onChange={getValue}></input>
           <input type="submit" value="search" className="searchSubmit"></input>
         </form>
       </div>
       <div className="recipes">
           {recipe.map(recipe=> (
-            <Recipe title={recipe.recipe.label} calories={recipe.recipe.calories} imageLink={recipe.recipe.image} />
+            <Recipe 
+                key={recipe.recipe.label}
+                title={recipe.recipe.label} 
+                calories={recipe.recipe.calories} 
+                imageLink={recipe.recipe.image} />
           ))}
       </div>
     </main>
