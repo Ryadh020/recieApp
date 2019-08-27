@@ -10,7 +10,7 @@ const App = (props)=> {
     // Propreties:
     // 1. the recipes data:
   const [recipe, setRecipes] = useState([]);
-  const [serchValue, setSearchValue] = useState('');
+  const [serchValue, setSearchValue] = useState('eg:chiken');
   const [query, setQuery] = useState('');
 
   // get the data from the API :
@@ -22,6 +22,16 @@ const App = (props)=> {
     setRecipes(data.hits);
   }
 
+  // clear input value 
+  const clearInput =() => {
+    setSearchValue("");
+  }
+
+  // fille the input
+  const FillInput =()=> {
+    setSearchValue("eg:chiken");
+  }
+
   // get data input when typing :
   const getValue = e => {
     setSearchValue(e.target.value)
@@ -31,7 +41,7 @@ const App = (props)=> {
   const getSearch = e => {
     e.preventDefault();
     setQuery(serchValue);
-    setSearchValue("")
+    clearInput();
   }
 
   // run when the page first load and the query changing :
@@ -41,15 +51,14 @@ const App = (props)=> {
 
 
   return (
-    <main>
-      <div className="App-header">
-        <div className="header" >Search for a reciepe</div>
+    <div>
+      <header className="Search-bar-container">
         <form className="searchBar" onSubmit={getSearch}>
-          <input type="text" className="searchText" value={serchValue} onChange={getValue}></input>
-          <input type="submit" value="search" className="searchSubmit"></input>
+          <input type="text" className="searchText" value={serchValue} onChange={getValue} onFocus={clearInput} onBlur={FillInput}></input>
+          <input type="submit" value="O" className="searchSubmit"></input>
         </form>
-      </div>
-      <div className="recipes">
+      </header>
+      <main className="recipes">
           {recipe.map(recipe=> (
             <Recipe 
                 key={recipe.recipe.label}
@@ -57,8 +66,8 @@ const App = (props)=> {
                 calories={recipe.recipe.calories} 
                 imageLink={recipe.recipe.image} />
           ))}
-      </div>
-    </main>
+      </main>
+    </div>
   );
 }
 
