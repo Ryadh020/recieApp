@@ -97,6 +97,19 @@
   box-shadow: #4a4c53 0 0 6px 1px;
 }
 
+.recipe-button {
+  width: 230px;
+  min-height: 220px;
+  border-radius: 25px;
+
+  position: relative;
+
+  outline: none;
+  border: none;
+  background-color: transparent;
+
+}
+
 
 /* Ingredients :*/
 
