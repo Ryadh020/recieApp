@@ -11,7 +11,7 @@ const App = (props)=> {
     // 1. the recipes data:
   const [recipe, setRecipes] = useState([]);
   const [serchValue, setSearchValue] = useState('eg:chiken');
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState('chiken');
 
   // get the data from the API :
   const getReciepies = async ()=> {
@@ -64,7 +64,9 @@ const App = (props)=> {
                 key={recipe.recipe.label}
                 title={recipe.recipe.label} 
                 calories={recipe.recipe.calories} 
-                imageLink={recipe.recipe.image} />
+                imageLink={recipe.recipe.image}
+                ingridients={recipe.recipe.ingredients}
+                />
           ))}
       </main>
     </div>
